@@ -1,3 +1,14 @@
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  grid-template-rows: 13rem 1fr 6rem;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -20,6 +31,35 @@
 
 .opacity-5 {
   opacity: 1;
+}
+
+.header {
+  grid-area: header;
+}
+
+.main {
+  grid-area: main;
+}
+
+/* .products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  grid-gap: 0.2rem;
+} */
+
+.products {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.product {
+  flex: 1 1 18rem;
+  margin: 0.2rem;
+}
+
+.footer {
+  grid-area: footer;
 }
 
 .hr-header-line {
