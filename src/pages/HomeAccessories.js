@@ -2,20 +2,18 @@ import { Layout } from 'antd';
 import AppHeader from "../components/Header"
 import AppFooter from "../components/Footer"
 import ProductList from "../components/ProductList";
-import products from "../json/products.json";
+import homeAccessories from "../json/home-accessories.json";
 
 const { Header, Content, Footer } = Layout;
 
-
-
-function Home() {
+function HomeAccessories() {
   return (
     <Layout className="container main-layout">
       <Header className="layout-header">
-        <AppHeader title="NORDIC NEST Shopping Cart"/>
+        <AppHeader title="Home Accessories" />
       </Header>
       <Content className="layout-content">
-        <ProductList products={products}/>
+        <ProductList products={homeAccessories} />
       </Content>
       <Footer className="layout-footer">
         <AppFooter/>  
@@ -24,4 +22,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomeAccessories;

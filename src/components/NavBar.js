@@ -1,12 +1,26 @@
+import { Link } from 'react-router-dom';
+
 export default function NavBar() {
     return (
-        <ul className="navBar bg-color list-unstyled">
-            <li className="navItem">Tableware</li>
-            <li className="navItem">Cookware</li>
-            <li className="navItem">Home accessories</li>
-            <li className="navItem">Lighting</li>
-            <li className="navItem">Textile</li>
-            <li className="navItem">Furniture</li>
-        </ul>
+        <div className="nav-bar">
+            <Link to="/tableware" className="nav-item">
+                Tableware
+            </Link>
+            <Link to="/cookware" className="nav-item">
+                Cookware
+            </Link>
+            <Link to="/home-accessories" className="nav-item">
+                Home accessories
+            </Link>
+            <Link to="/lighting" className="nav-item">
+                Lighting
+            </Link>
+            <Link to="/textile" className="nav-item">
+                Textile
+            </Link>
+            <Link to="/furniture" className="nav-item">
+                Furniture
+            </Link>
+        </div>
     );
 }
