@@ -1,8 +1,9 @@
 import { NavLink } from 'react-router-dom';
 
-export default function NavBar() {
+export default function NavBar({isOnTouch}) {
+    const navBarClass = isOnTouch?"nav-bar":"nav-bar collapse-mobile";
     return (
-        <div className="nav-bar">
+        <div className={navBarClass}>
             <NavLink to="/tableware" className="nav-item" activeClassName="nav-item--active">
                 Tableware
             </NavLink>
