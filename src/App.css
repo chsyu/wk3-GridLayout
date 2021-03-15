@@ -127,7 +127,7 @@ body {
   flex-direction: column;
   padding: 2rem;
   padding-top: 4rem;
-  height: 100vh;
+  min-height: 100vh;
   transition: all 0.25s linear;
 }
 
