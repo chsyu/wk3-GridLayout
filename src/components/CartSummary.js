@@ -6,15 +6,14 @@ import { StoreContext } from "../store"
 
 export default function CartSummary() {
 
-  const { state } = useContext(StoreContext);
-  const { cartItems } = state;
+  const { state: { cartItems } } = useContext(StoreContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const toggleModal = () => setIsModalVisible(!isModalVisible);
   
   let count = 0;
   if(cartItems.length > 0) {
     cartItems.map(item => {
-      count = count + item.qty;
+      count += item.qty;
     })
   }
 

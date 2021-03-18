@@ -52,13 +52,13 @@ export default function NavItem(props) {
       history.push(to);
     };
    return (
-      <p 
+      <div
          onClick={onClick} 
          className={`
          ${className} 
          ${state.navBar.activeItem==to? activeClassName: ""}`}
       >
          {children}
-      </p>
+      </div>
    );
 }

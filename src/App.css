@@ -131,6 +131,11 @@ body {
 
   .header-title {
     font-size: 1.3rem;
+    width: 10rem;
+  }
+
+  .header-slogan {
+    display: none;
   }
 
   .header-cart-summary {

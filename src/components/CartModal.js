@@ -3,20 +3,9 @@ import { useContext } from "react";
 import { StoreContext } from "../store"
 
 export default function CartModal({isModalVisible, toggleModal}) {
-   const { state } = useContext(StoreContext);
-   const { cartItems } = state;
-
-   const showModal = () => {
-      toggleModal(true);
-   };
- 
-   const handleOk = () => {
-      toggleModal(false);
-   };
- 
-   const handleCancel = () => {
-      toggleModal(false);
-   };   
+   const { state: { cartItems } } = useContext(StoreContext);
+   const handleOk = () => toggleModal(!isModalVisible);
+   const handleCancel = () => toggleModal(!isModalVisible);
    
    return (
       <Modal 
@@ -27,7 +16,7 @@ export default function CartModal({isModalVisible, toggleModal}) {
          okText="Checkout Now"
          cancelText="Still Shopping"
       >
-         {cartItems.map(item=><p>{item.name} x {item.qty}</p>)}
+         {cartItems.map(item=><p key={item.id}>{item.name} x {item.qty}</p>)}
       </Modal>
    );
 }

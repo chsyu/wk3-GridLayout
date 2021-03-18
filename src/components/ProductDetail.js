@@ -40,7 +40,7 @@ function ProductDetail({ product }) {
                   <p className="product-status">
                      Status: {product.countInStock > 0 ? "In Stock" : "Unavailable."}
                   </p>
-                  <p className="product-qty">
+                  <div className="product-qty">
                      Qty: {"   "}
                      <Select
                         defaultValue={qty}
@@ -53,7 +53,7 @@ function ProductDetail({ product }) {
                            </Option>
                         ))}
                      </Select>
-                  </p>
+                  </div>
                   <p className="product-qty">
                      Total Price: {product.price * qty}
                   </p>
