@@ -7,6 +7,7 @@ import {
 } from "../utils/constants"
 import { StoreContext } from "../store"
 
+import products from "../json/products.json";
 import textile from "../json/tableware.json";
 import cookware from "../json/cookware.json";
 import furniture from "../json/furniture.json";
@@ -33,6 +34,8 @@ export default function NavItem(props) {
             return furniture;
          case "/home-accessories":
             return homeAccessories;
+         default:
+            return products;
       }
    }
 
@@ -57,7 +60,7 @@ export default function NavItem(props) {
          onClick={onClick}
          className={`
          ${className} 
-         ${state.navBar.activeItem == to ? activeClassName : ""}`}
+         ${state.navBar.activeItem === to ? activeClassName : ""}`}
       >
          {children}
       </div>

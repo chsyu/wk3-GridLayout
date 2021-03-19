@@ -1,5 +1,7 @@
 import { Modal, Button, Select } from "antd";
-import { useContext } from "react";
+import { useEffect, useContext } from "react";
+import Cookie from "js-cookie"
+
 import { StoreContext } from "../store"
 import { CartIcon } from "./Icons";
 import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../utils/constants";
@@ -28,10 +30,14 @@ export default function CartModal({ isModalVisible, toggleModal }) {
    };
 
    const getTotalPrice = () => {
-      let totalPrice = 0;
-      cartItems.map(item=> totalPrice += item.price * item.qty)
-      return totalPrice;
+      return (cartItems.length > 0) ?
+         cartItems.reduce((sum, item) => sum + item.price * item.qty, 0)
+         : 0;
    }
+
+   useEffect(()=>{
+      Cookie.set("cartItems", JSON.stringify(cartItems));
+     }, [cartItems])
 
    return (
       <Modal
@@ -67,9 +73,9 @@ export default function CartModal({ isModalVisible, toggleModal }) {
                   </div>
                   <div className="cart-item-end">
                      <div className="cart-price">
-                        ${item.price * item.qty}    
+                        ${item.price * item.qty}
                      </div>
-                     <div className="cart-item-delete" onClick={()=>removeFromCart(item.id)}>
+                     <div className="cart-item-delete" onClick={() => removeFromCart(item.id)}>
                         x
                      </div>
                   </div>
@@ -78,7 +84,7 @@ export default function CartModal({ isModalVisible, toggleModal }) {
             ))
          )}
          <div className="cart-total-price-wrap">
-           Total
+            Total
             <div className="cart-total-price">${getTotalPrice()}</div>
          </div>
          <Button
