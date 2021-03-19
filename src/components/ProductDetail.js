@@ -2,13 +2,10 @@ import { useState, useContext } from "react";
 import { Row, Col } from "antd";
 import { Select } from 'antd';
 import AddToCart from "./AddToCart"
-import { StoreContext } from "../store"
-import { CART_ADD_ITEM } from "../utils/constants"
 
 const { Option } = Select;
 
 function ProductDetail({ product }) {
-   const { dispatch } = useContext(StoreContext);
    const [qty, setQty] = useState(product.countInStock > 0 ? 1 : 0);
 
    return (
@@ -35,7 +32,7 @@ function ProductDetail({ product }) {
                <p className="product-description">{product.description_long}</p>
                <div className="product-price-wrap">
                   <p className="product-price product-price--large">
-                     US${product.price}.00
+                     ${product.price}.00
                </p>
                   <p className="product-status">
                      Status: {product.countInStock > 0 ? "In Stock" : "Unavailable."}
@@ -55,7 +52,7 @@ function ProductDetail({ product }) {
                      </Select>
                   </div>
                   <p className="product-qty">
-                     Total Price: {product.price * qty}
+                     Total Price: ${product.price * qty}
                   </p>
                   <AddToCart product={product} qty={qty} />
                </div>

@@ -53,14 +53,14 @@ function reducer(state, action) {
          const product = state.cartItems.find((x) => x.id === item.id);
          if (product) {
             cartItems = state.cartItems.map((x) =>
-               x.product === product.product ? item : x
+               x.id === product.id ? item : x
             );
             return { ...state, cartItems };
          }
          cartItems = [...state.cartItems, item];
          return { ...state, cartItems };
       case CART_REMOVE_ITEM:
-         cartItems = state.cartItems.filter((x) => x.product !== action.payload);
+         cartItems = state.cartItems.filter((x) => x.id !== action.payload);
          return { ...state, cartItems };
       default:
          return state;
