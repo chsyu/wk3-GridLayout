@@ -5,7 +5,6 @@ import {
    PAGE_CONTENT_SET, 
    NAVBAR_ITEM_SET } from "../utils/constants"
 import { StoreContext } from "../store"
-import NavBar from "./NavBar";
 import products from "../json/products.json"
 import CartSummary from "./CartSummary";
 
@@ -44,7 +43,6 @@ export default function Header(props) {
          </div>
 
          <hr className="hr-header-line" />
-         <NavBar />
       </header>
    );
 }

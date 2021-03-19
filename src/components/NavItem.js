@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { 
+import {
    PAGE_TITLE_SET,
    PAGE_CONTENT_SET,
-   NAVBAR_ITEM_SET, 
+   NAVBAR_ITEM_SET,
 } from "../utils/constants"
 import { StoreContext } from "../store"
 
@@ -15,48 +15,49 @@ import lighting from "../json/lighting.json";
 import tableware from "../json/tableware.json";
 
 export default function NavItem(props) {
-   const { children, to, className, activeClassName } = props
+   const { children, to, className, activeClassName, onClose } = props
 
    const { state, dispatch } = useContext(StoreContext);
    const history = useHistory();
    const getJSON = url => {
       switch (url) {
          case "/textile":
-            return textile;      
+            return textile;
          case "/tableware":
-            return tableware;      
+            return tableware;
          case "/lighting":
-            return lighting;      
+            return lighting;
          case "/cookware":
-            return cookware;      
+            return cookware;
          case "/furniture":
-            return furniture;      
+            return furniture;
          case "/home-accessories":
-            return homeAccessories;      
+            return homeAccessories;
       }
    }
-   
-   const onClick= () => {
-       dispatch({ 
-          type: PAGE_TITLE_SET, 
-          payload: children,
-       });
-       dispatch({ 
-         type: PAGE_CONTENT_SET, 
+
+   const onClick = () => {
+      dispatch({
+         type: PAGE_TITLE_SET,
+         payload: children,
+      });
+      dispatch({
+         type: PAGE_CONTENT_SET,
          payload: getJSON(to),
       });
-      dispatch({ 
-         type: NAVBAR_ITEM_SET, 
+      dispatch({
+         type: NAVBAR_ITEM_SET,
          payload: to,
       });
       history.push(to);
-    };
+      if(onClose) onClose();
+   };
    return (
       <div
-         onClick={onClick} 
+         onClick={onClick}
          className={`
          ${className} 
-         ${state.navBar.activeItem==to? activeClassName: ""}`}
+         ${state.navBar.activeItem == to ? activeClassName : ""}`}
       >
          {children}
       </div>
