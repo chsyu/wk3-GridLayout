@@ -14,11 +14,12 @@ export default function AddToCart({ product, qty }) {
       onClick: () => {
         console.log('Notification Clicked!');
       },
+      placement: 'bottomRight'
     });
   };
 
   const addToCart = () => {
-    // openNotification();
+    openNotification();
     dispatch({
       type: CART_ADD_ITEM,
       payload: {
