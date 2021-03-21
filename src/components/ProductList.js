@@ -7,7 +7,7 @@ export default function ProductList({products}) {
     {products.map(product => (
         <Col 
           key={product.id} 
-          md={{ span: 12 }} 
+          lg={{ span: 12 }} 
           xl={{ span: 8 }}
           xxl={{ span: 6 }}
         >
