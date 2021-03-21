@@ -150,7 +150,9 @@ body {
 
 @media (max-width: 576px) {
   .header-cart-summary {
-    margin-right: 1rem;
+    margin-right: 0.7rem;
+  }
+  .header-title {
     width: 10rem;
   }
 }

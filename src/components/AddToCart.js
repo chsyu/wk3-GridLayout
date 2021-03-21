@@ -1,13 +1,11 @@
-import { useEffect, useContext } from "react";
-import Cookie from "js-cookie"
-
+import { useContext } from "react";
 import { Button, notification } from "antd"
 import { StoreContext } from "../store"
 import { CART_ADD_ITEM } from "../utils/constants"
 import { CartIcon } from "./Icons";
 
 export default function AddToCart({ product, qty }) {
-  const { state: { cartItems }, dispatch } = useContext(StoreContext);
+  const { dispatch } = useContext(StoreContext);
 
   const openNotification = () => {
     notification.open({
@@ -36,9 +34,6 @@ export default function AddToCart({ product, qty }) {
     });
   };
 
-  useEffect(()=>{
-    Cookie.set("cartItems", JSON.stringify(cartItems));
-   }, [cartItems])
 
   return (
     <Button type="primary" className="btn-tocar" onClick={addToCart}>
