@@ -10,10 +10,10 @@ export default function CartSummary() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const toggleModal = () => setIsModalVisible(!isModalVisible);
 
-  let count = (cartItems.length > 0) ?
+  const count = (cartItems.length > 0) ?
     cartItems.reduce((sum, item) => sum + item.qty, 0)
     : 0;
-    
+
   return (
     <>
       <nav onClick={toggleModal} className="header-cart-summary" >

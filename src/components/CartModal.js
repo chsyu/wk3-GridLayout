@@ -1,5 +1,5 @@
 import { Modal, Button, Select } from "antd";
-import { useContext } from "react";
+import { useEffect, useContext } from "react";
 import { StoreContext } from "../store"
 import { CartIcon } from "./Icons";
 import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../utils/constants";
@@ -32,6 +32,10 @@ export default function CartModal({ isModalVisible, toggleModal }) {
          cartItems.reduce((sum, item) => sum + item.price * item.qty, 0)
          : 0;
    }
+
+   useEffect(()=>{
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+   }, [cartItems])
 
    return (
       <Modal
