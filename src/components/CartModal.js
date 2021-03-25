@@ -2,31 +2,12 @@ import { Modal, Button, Select } from "antd";
 import { useEffect, useContext } from "react";
 import { StoreContext } from "../store"
 import { CartIcon } from "./Icons";
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../utils/constants";
-
+import { cartItemAdd, cartItemRemove } from "../actions";
 const { Option } = Select;
 
 export default function CartModal({ isModalVisible, toggleModal }) {
    const { state: { cartItems }, dispatch } = useContext(StoreContext);
    const handleCancel = () => toggleModal(!isModalVisible);
-   const addToCart = (product, qty) => {
-      dispatch({
-         type: CART_ADD_ITEM,
-         payload: {
-            id: product.id,
-            name: product.name,
-            image: product.image,
-            price: product.price,
-            countInStock: product.countInStock,
-            qty,
-         },
-      });
-   };
-
-   const removeFromCart = (productId) => {
-      dispatch({ type: CART_REMOVE_ITEM, payload: productId });
-   };
-
    const getTotalPrice = () => {
       return (cartItems.length > 0) ?
          cartItems.reduce((sum, item) => sum + item.price * item.qty, 0)
@@ -59,7 +40,7 @@ export default function CartModal({ isModalVisible, toggleModal }) {
                         <Select
                            defaultValue={item.qty}
                            className="select-style"
-                           onChange={(val) => addToCart(item, val)}
+                           onChange={(qty) => cartItemAdd(dispatch, item, qty)}
                         >
                            {[...Array(item.countInStock).keys()].map((x) => (
                               <Option key={x + 1} value={x + 1}>
@@ -73,7 +54,7 @@ export default function CartModal({ isModalVisible, toggleModal }) {
                      <div className="cart-price">
                         ${item.price * item.qty}
                      </div>
-                     <div className="cart-item-delete" onClick={() => removeFromCart(item.id)}>
+                     <div className="cart-item-delete" onClick={() => cartItemRemove(dispatch, item.id)}>
                         x
                      </div>
                   </div>

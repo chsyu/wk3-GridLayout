@@ -2,7 +2,7 @@ import { useEffect, useContext } from "react";
 
 import { Button, notification } from "antd"
 import { StoreContext } from "../store"
-import { CART_ADD_ITEM } from "../utils/constants"
+import { cartItemAdd } from "../actions";
 import { CartIcon } from "./Icons";
 
 export default function AddToCart({ product, qty }) {
@@ -22,17 +22,7 @@ export default function AddToCart({ product, qty }) {
 
   const addToCart = () => {
     openNotification();
-    dispatch({
-      type: CART_ADD_ITEM,
-      payload: {
-        id: product.id,
-        name: product.name,
-        image: product.image,
-        price: product.price,
-        countInStock: product.countInStock,
-        qty,
-      },
-    });
+    cartItemAdd(dispatch, product, qty);
   };
 
   useEffect(()=>{
