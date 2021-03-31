@@ -1,16 +1,19 @@
+import { useContext, useEffect } from "react";
 import { Layout } from 'antd';
 import NavBar from "../components/NavBar";
 import AppHeader from "../components/Header"
 import AppFooter from "../components/Footer"
 import ProductDetail from "../components/ProductDetail";
-import products from "../json/products.json";
+import { setProductDetail } from "../actions";
+import { StoreContext } from "../store"
+
 
 const { Header, Content, Footer } = Layout;
 
 function Product({ match }) {
-   const product = products.find(
-      x => x.id === match.params.productId
-   );
+   const { state: { allProducts }, dispatch } = useContext(StoreContext);   
+   useEffect(() => setProductDetail(dispatch, match.params.productId, 0, allProducts),[])
+
    return (
       <Layout className="container main-layout">
          <Layout className="bg-gray">
@@ -21,7 +24,7 @@ function Product({ match }) {
                <AppHeader title="Product Detail" />
             </Header>
             <Content className="layout-content">
-               <ProductDetail product={product} />
+               <ProductDetail />
             </Content>
             <Footer className="layout-footer">
                <AppFooter />

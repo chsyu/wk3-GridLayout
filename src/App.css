@@ -524,3 +524,14 @@ span.ham-menu-bar3--touch {
     height: 24rem;
   }
 }
+
+/* spinner */
+.spinner-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.spinner {
+  margin-top: 20vh;
+}
