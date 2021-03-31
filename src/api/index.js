@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-
+import jsonInfoProducts from "../json/jsonInfoProducts.json"
 import jsonInfo from "../json/jsonInfo.json";
 import products from "../json/products.json";
 import textile from "../json/textile.json";
@@ -56,12 +56,23 @@ export const getProducts = async (url) => {
     .collection("products");
   const productsDocRef = productsCollectionRef.doc("json");
   // REFERENCE PRODUCTS COLLECTION
-  const categorizedCollectionRef = productsDocRef.collection(`${collectionName}`);
-  const querySnapshot = await categorizedCollectionRef.get();
+  if (url != "/") {
+    const categorizedCollectionRef = await productsDocRef.collection(`${collectionName}`);
+    const querySnapshot = await categorizedCollectionRef.get();
 
-  querySnapshot.forEach((doc) => {
-    jsonProducts.push(doc.data());
-  });
+    querySnapshot.forEach((doc) => {
+      jsonProducts.push(doc.data());
+    });
+  } else {
+    for (let i=0; i < jsonInfoProducts.length; i++) {
+      const category = jsonInfoProducts[i];
+      const categorizedCollectionRef = await productsDocRef.collection(`${category.name}`);
+      const querySnapshot = await categorizedCollectionRef.get();      
+      querySnapshot.forEach((doc) => {
+        jsonProducts.push(doc.data());
+      });
+    }
+  }
   return jsonProducts;
 }
 
