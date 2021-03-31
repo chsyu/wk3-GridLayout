@@ -56,23 +56,13 @@ export const getProducts = async (url) => {
     .collection("products");
   const productsDocRef = productsCollectionRef.doc("json");
   // REFERENCE PRODUCTS COLLECTION
-  if (url != "/") {
-    const categorizedCollectionRef = await productsDocRef.collection(`${collectionName}`);
-    const querySnapshot = await categorizedCollectionRef.get();
+  const categorizedCollectionRef = await productsDocRef.collection(`${collectionName}`);
+  const querySnapshot = await categorizedCollectionRef.get();
 
-    querySnapshot.forEach((doc) => {
-      jsonProducts.push(doc.data());
-    });
-  } else {
-    for (let i=0; i < jsonInfoProducts.length; i++) {
-      const category = jsonInfoProducts[i];
-      const categorizedCollectionRef = await productsDocRef.collection(`${category.name}`);
-      const querySnapshot = await categorizedCollectionRef.get();      
-      querySnapshot.forEach((doc) => {
-        jsonProducts.push(doc.data());
-      });
-    }
-  }
+  querySnapshot.forEach((doc) => {
+    jsonProducts.push(doc.data());
+  });
+
   return jsonProducts;
 }
 
@@ -83,13 +73,19 @@ export const feedProducts = (name, products) => {
   const productsDocRef = productsCollectionRef.doc("json");
   // REFERENCE PRODUCTS COLLECTION
   const categorizedCollectionRef = productsDocRef.collection(`${name}`);
+  const allProductsCollectionRef = productsDocRef.collection('AllProducts')
   products.forEach((product) => {
     const docRef = categorizedCollectionRef.doc();
     const id = docRef.id;
+    // Store Data for Aggregation Queries
     docRef.set({
       ...product,
       id
     });
+    allProductsCollectionRef.add({
+      ...product,
+      id,
+    })
   })
 }
 

@@ -1,12 +1,12 @@
 import { Row, Col } from "antd";
 import FeederItem from "./FeederItem";
 import { getJSON } from "../api";
-import jsonInfo from "../json/jsonInfo.json";
+import jsonInfoProducts from "../json/jsonInfoProducts.json";
 
-export default function FeederList({products}) {
+export default function FeederList() {
   return (
     <Row gutter={[32, 32]}>
-    {jsonInfo.map(json => (
+    {jsonInfoProducts.map(json => (
         <Col 
           key={json.name} 
           lg={{ span: 12 }} 
