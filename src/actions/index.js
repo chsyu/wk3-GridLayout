@@ -1,4 +1,5 @@
 import {
+  SET_PAGE_TITLE,
   SET_PAGE_CONTENT,
   SET_NAVBAR_ACTIVEITEM,
   ADD_CART_ITEM,
@@ -48,7 +49,7 @@ export const feedJSONToFirebase = async (dispatch) => {
 }
 
 export const setProductDetail = async (dispatch, productId, qty, category) => {
-  dispatch({ type: BEGIN_PRODUCTS_REQUEST });
+  await dispatch({ type: BEGIN_PRODUCTS_REQUEST });
   try {
     const product = await getProductById(productId, category);
     if (qty === 0 && product.countInStock > 0) qty = 1;
@@ -68,12 +69,16 @@ export const setProductDetail = async (dispatch, productId, qty, category) => {
 
 export const setPage = async (dispatch, url, title) => {
   let products = [];
-  dispatch({ type: BEGIN_PRODUCTS_REQUEST });
+  await dispatch({ type: BEGIN_PRODUCTS_REQUEST });
+  await dispatch({
+    type: SET_PAGE_TITLE,
+    payload: title,
+  });
   try {
     products = await getProducts(url);
     dispatch({
       type: SET_PAGE_CONTENT,
-      payload: { title, products },
+      payload: products,
     });
     dispatch({
       type: SET_NAVBAR_ACTIVEITEM,

@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import useReducerWithThunk from "use-reducer-thunk";
 import {
+  SET_PAGE_TITLE,
   SET_PAGE_CONTENT,
   SET_NAVBAR_ACTIVEITEM,
   ADD_CART_ITEM,
@@ -22,7 +23,7 @@ let cartItems = localStorage.getItem("cartItems")
 const initialState = {
   allProducts: [],
   page: {
-    title: "NORDIC NEST Shopping Cart",
+    title: "",
     products: [],
   },
   productDetail: {
@@ -45,10 +46,21 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
+    case SET_PAGE_TITLE:
+      return {
+        ...state,
+        page: {
+          ...state.page,
+          title: action.payload
+        },
+      };
     case SET_PAGE_CONTENT:
       return {
         ...state,
-        page: action.payload,
+        page: {
+          ...state.page,
+          products: action.payload
+        },
       };
     case SET_NAVBAR_ACTIVEITEM:
       return {

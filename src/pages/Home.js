@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Layout } from 'antd';
 
 import NavBar from "../components/NavBar";
@@ -6,12 +6,18 @@ import AppHeader from "../components/Header"
 import AppFooter from "../components/Footer"
 import ProductList from "../components/ProductList";
 import { StoreContext } from "../store"
+import { setPage } from "../actions";
+import { getTitle } from "../utils";
 
 const { Header, Content, Footer } = Layout;
 
 function Home() {
-  const { state: { page: { title } } } = useContext(StoreContext);
+  const { state: { page: { title } }, dispatch } = useContext(StoreContext);
 
+  useEffect(() => {
+    const url = window.location.pathname;
+    setPage(dispatch, url, getTitle(url))
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
   return (
     <Layout className="container main-layout">
       <Layout className="bg-gray nav-area">
