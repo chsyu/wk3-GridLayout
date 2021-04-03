@@ -20,7 +20,7 @@ export default function NavBar() {
                     Cookware
                 </NavItem>
                 <NavItem to="/home-accessories" className="nav-item" activeClassName="nav-item--active">
-                    Home accessories
+                    Home Accessories
                 </NavItem>
                 <NavItem to="/lighting" className="nav-item" activeClassName="nav-item--active">
                     Lighting
@@ -31,7 +31,7 @@ export default function NavBar() {
                 <NavItem to="/furniture" className="nav-item" activeClassName="nav-item--active">
                     Furniture
                 </NavItem>
-                <NavItem to="/products/feeder" className="nav-item" activeClassName="nav-item--active">
+                <NavItem to="/admin/feed-products" className="nav-item" activeClassName="nav-item--active">
                     JSON Feeder
                 </NavItem>
             </div>
@@ -54,7 +54,7 @@ export default function NavBar() {
                     Cookware
                 </NavItem>
                 <NavItem onClose={handleCloseDrawer} to="/home-accessories" className="nav-item" activeClassName="nav-item--active">
-                    Home accessories
+                    Home Accessories
                 </NavItem>
                 <NavItem onClose={handleCloseDrawer} to="/lighting" className="nav-item" activeClassName="nav-item--active">
                     Lighting
@@ -64,6 +64,9 @@ export default function NavBar() {
                 </NavItem>
                 <NavItem onClose={handleCloseDrawer} to="/furniture" className="nav-item" activeClassName="nav-item--active">
                     Furniture
+                </NavItem>
+                <NavItem to="/admin/feed-products" className="nav-item" activeClassName="nav-item--active">
+                    JSON Feeder
                 </NavItem>
             </Drawer>
         </div>

@@ -1,7 +1,7 @@
 [
    {
       "title": "NORDIC NEST Shopping Cart",
-      "name": "AllProducts",
+      "name": "allProducts",
       "url": "/"
    },
    {
@@ -15,8 +15,8 @@
       "url": "/furniture"
    },
    {
-      "title": "Home acessories",
-      "name": "HomeAccessories",
+      "title": "Home Acessories",
+      "name": "Home Accessories",
       "url": "/home-accessories"
    },
    {
@@ -37,6 +37,6 @@
    {
       "title": "Feed JSON Page",
       "name": "FeedJSONPage",
-      "url": "/products/feeder"
+      "url": "/admin/feed-products"
    }
 ]

@@ -1,7 +1,6 @@
 import { createContext } from "react";
 import useReducerWithThunk from "use-reducer-thunk";
 import {
-  SET_ALL_PRODUCTS,
   SET_PAGE_CONTENT,
   SET_NAVBAR_ACTIVEITEM,
   ADD_CART_ITEM,
@@ -39,18 +38,13 @@ const initialState = {
     error: null,
   },
   requestProducts: {
-    loading: false,
+    loading: true,
     error: null,
   }
 };
 
 function reducer(state, action) {
   switch (action.type) {
-    case SET_ALL_PRODUCTS:
-      return {
-        ...state,
-        allProducts: action.payload,
-      };
     case SET_PAGE_CONTENT:
       return {
         ...state,

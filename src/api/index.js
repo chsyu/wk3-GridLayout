@@ -1,15 +1,8 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import jsonInfoProducts from "../json/jsonInfoProducts.json"
 import jsonInfo from "../json/jsonInfo.json";
 import products from "../json/products.json";
-import textile from "../json/textile.json";
-import cookware from "../json/cookware.json";
-import furniture from "../json/furniture.json";
-import homeAccessories from "../json/home-accessories";
-import lighting from "../json/lighting.json";
-import tableware from "../json/tableware.json";
 
 // INITIALIZE FIREBASE
 const firebaseConfig = {
@@ -24,68 +17,44 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+// REFERENCE PRODUCTS
+const productsCollectionRef = firebase.firestore().collection("products");
+const productsDocRef = productsCollectionRef.doc("json");
+const allProductsCollectionRef = productsDocRef.collection("allProducts");
 
-export const getJSON = (url) => {
-  switch (url) {
-    case "/":
-      return products;
-    case "/textile":
-      return textile;
-    case "/tableware":
-      return tableware;
-    case "/lighting":
-      return lighting;
-    case "/cookware":
-      return cookware;
-    case "/furniture":
-      return furniture;
-    case "/home-accessories":
-      return homeAccessories;
-    default:
-      return products;
-  }
-};
+export const getProductById = async (productId) => {
+  // REFERENCE PRODUCTS COLLECTION
+  const doc = await allProductsCollectionRef.doc(productId).get();
+  return doc.data()
+}
 
 export const getProducts = async (url) => {
   const collection = jsonInfo.find(element => element.url === url);
-  const collectionName = collection.name || "AllProducts";
+  const collectionName = collection.name || "allProducts";
+  console.log(collectionName)
   let jsonProducts = [];
-  // REFERENCE PRODUCTS DOCUMENT
-  const productsCollectionRef = firebase.firestore()
-    .collection("products");
-  const productsDocRef = productsCollectionRef.doc("json");
-  // REFERENCE PRODUCTS COLLECTION
-  const categorizedCollectionRef = await productsDocRef.collection(`${collectionName}`);
-  const querySnapshot = await categorizedCollectionRef.get();
 
+  // QUERY PRODUCTS
+  let querySnapshot;
+  if (collectionName === "allProducts")
+    querySnapshot = await allProductsCollectionRef.get();
+  else
+    querySnapshot = await allProductsCollectionRef.where("category", "==", collectionName).get();
   querySnapshot.forEach((doc) => {
     jsonProducts.push(doc.data());
   });
-
   return jsonProducts;
 }
 
-export const feedProducts = (name, products) => {
-  // REFERENCE PRODUCTS DOCUMENT
-  const productsCollectionRef = firebase.firestore()
-    .collection("products");
-  const productsDocRef = productsCollectionRef.doc("json");
-  // REFERENCE PRODUCTS COLLECTION
-  const categorizedCollectionRef = productsDocRef.collection(`${name}`);
-  const allProductsCollectionRef = productsDocRef.collection('AllProducts')
+export const feedProducts = () => {
   products.forEach((product) => {
-    const docRef = categorizedCollectionRef.doc();
+    const docRef = allProductsCollectionRef.doc();
     const id = docRef.id;
     // Store Data for Aggregation Queries
     docRef.set({
       ...product,
       id
     });
-    allProductsCollectionRef.add({
-      ...product,
-      id,
-    })
   })
 }
 

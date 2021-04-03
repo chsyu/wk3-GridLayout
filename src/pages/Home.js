@@ -14,10 +14,10 @@ function Home() {
 
   return (
     <Layout className="container main-layout">
-      <Layout className="bg-gray">
+      <Layout className="bg-gray nav-area">
         <NavBar />
       </Layout>
-      <Layout className="bg-gray">
+      <Layout className="bg-gray main-area">
         <Header className="layout-header">
           <AppHeader title={title} />
         </Header>

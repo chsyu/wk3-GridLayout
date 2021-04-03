@@ -3,17 +3,18 @@ import { Row, Col, Spin } from "antd";
 import { LoadingOutlined } from '@ant-design/icons';
 
 import ProductItem from "./ProductItem";
-import { setPage, getTitle } from "../actions"
-import { StoreContext } from "../store"
+import { setPage } from "../actions";
+import { StoreContext } from "../store";
+import { getTitle } from "../utils";
 
 export default function ProductList() {
-  const { state: { page: { products }, allProducts, requestProducts: { loading } }, dispatch } = useContext(StoreContext);
+  const { state: { page: { products }, requestProducts: { loading } }, dispatch } = useContext(StoreContext);
   const antIcon = <LoadingOutlined style={{ fontSize: 80, color: "#8183ff" }} spin />;
 
   useEffect(() => {
-      const url = window.location.pathname;
-      setPage(dispatch, url ,getTitle(url) )
-  }, []);
+    const url = window.location.pathname;
+    setPage(dispatch, url, getTitle(url))
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -27,9 +28,8 @@ export default function ProductList() {
             {products.map(product => (
               <Col
                 key={product.id}
-                lg={{ span: 12 }}
-                xl={{ span: 8 }}
-                xxl={{ span: 6 }}
+                md={{ span: 12 }}
+                xxl={{ span: 8 }}
               >
                 <ProductItem product={product} />
               </Col>

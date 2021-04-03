@@ -8,7 +8,7 @@ import { authenticateAnonymously } from "../api"
 const { Option } = Select;
 
 export default function CartModal({ isModalVisible, toggleModal }) {
-   const { state: { cartItems, allProducts }, dispatch } = useContext(StoreContext);
+   const { state: { cartItems }, dispatch } = useContext(StoreContext);
    const handleCancel = () => toggleModal(!isModalVisible);
    const getTotalPrice = () => {
       return (cartItems.length > 0) ?
@@ -38,9 +38,9 @@ export default function CartModal({ isModalVisible, toggleModal }) {
          ) : (
             cartItems.map(item => (
                <li key={item.id} className="cart-item">
-                  <Link to={`/product/${item.id}`}>
+                  <Link to={`/products/${item.category}/${item.id}`}>
                      <div className="cart-image" onClick={()=>{
-                        setProductDetail(dispatch, item.id, item.qty, allProducts);
+                        setProductDetail(dispatch, item.id, item.qty, item.category);
                         handleCancel();
                      }}>
                         <img src={item.image} alt={item.name} />

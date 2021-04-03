@@ -1,5 +1,4 @@
 import {
-  SET_ALL_PRODUCTS,
   SET_PAGE_CONTENT,
   SET_NAVBAR_ACTIVEITEM,
   ADD_CART_ITEM,
@@ -12,12 +11,12 @@ import {
   SUCCESS_PRODUCTS_REQUEST,
   FAIL_PRODUCTS_REQUEST,
 } from "../utils/constants";
-import { getProducts } from "../api";
-import jsonInfo from "../json/jsonInfo.json";
+import { getProducts, getProductById, feedProducts } from "../api";
 
 export const addCartItem = (dispatch, product, qty) => {
   const item = {
     id: product.id,
+    category: product.category,
     name: product.name,
     image: product.image,
     price: product.price,
@@ -37,15 +36,22 @@ export const removeCartItem = (dispatch, productId) => {
   });
 };
 
-export const setProductDetail = (dispatch, productId, qty, products) => {
-  if (products) {
-    const product = products.find(
-      x => x.id === productId
-    );
+export const feedJSONToFirebase = async (dispatch) => {
+  dispatch({ type: BEGIN_PRODUCTS_FEED });
+  try {
+    await feedProducts();
+    dispatch({ type: SUCCESS_PRODUCTS_FEED });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: FAIL_PRODUCTS_FEED, payload: error });
+  }
+}
 
-    if (qty === 0 && product.countInStock > 0)
-      qty = 1;
-
+export const setProductDetail = async (dispatch, productId, qty, category) => {
+  dispatch({ type: BEGIN_PRODUCTS_REQUEST });
+  try {
+    const product = await getProductById(productId, category);
+    if (qty === 0 && product.countInStock > 0) qty = 1;
     dispatch({
       type: SET_PRODUCT_DETAIL,
       payload: {
@@ -53,22 +59,12 @@ export const setProductDetail = (dispatch, productId, qty, products) => {
         qty,
       }
     })
+    dispatch({ type: SUCCESS_PRODUCTS_REQUEST });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: FAIL_PRODUCTS_REQUEST, payload: error });
   }
 }
-
-// export const pageContentsSet = (dispatch, title, products) => {
-//   dispatch({
-//     type: SET_PAGE_CONTENT,
-//     payload: { title, products },
-//   });
-// };
-
-// export const activeNavItemSet = (dispatch, activeNavItem) => {
-//   dispatch({
-//     type: SET_NAVBAR_ACTIVEITEM,
-//     payload: activeNavItem,
-//   });
-// };
 
 export const setPage = async (dispatch, url, title) => {
   let products = [];
@@ -79,24 +75,13 @@ export const setPage = async (dispatch, url, title) => {
       type: SET_PAGE_CONTENT,
       payload: { title, products },
     });
-    if(url === "/")
-      dispatch({
-        type: SET_ALL_PRODUCTS,
-        payload: products,
-      })
     dispatch({
       type: SET_NAVBAR_ACTIVEITEM,
       payload: url,
     });    
     dispatch({ type: SUCCESS_PRODUCTS_REQUEST });
   } catch (error) {
+    console.log(error);
     dispatch({ type: FAIL_PRODUCTS_REQUEST, payload: error });
   }
-}
-
-export const getTitle = url => {
-  const json = jsonInfo.find(
-    x => x.url === url
-  );
-  return json.title;
 }
