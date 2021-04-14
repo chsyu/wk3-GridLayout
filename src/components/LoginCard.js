@@ -1,17 +1,23 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, {useContext} from "react";
+import { Link, useHistory } from "react-router-dom";
 import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { WarningOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
+import { loginToFirebase } from '../actions'
+import { StoreContext } from "../store"
 
 const LoginCard = () => {
+  const { state:{ userSignin: { error } }, dispatch } = useContext(StoreContext);
   const [form] = Form.useForm();
+  const history = useHistory();
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed: ', errorInfo.errorFields[0].errors[0])
   };
   
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log('Received values of form: ', values);
+    await loginToFirebase(dispatch, values);
+    history.push("/profile");
   };
 
   return (
@@ -26,15 +32,18 @@ const LoginCard = () => {
       onFihishFailed={onFinishFailed}
     >
       <Form.Item
-        name="username"
+        name="email"
         rules={[
           {
             required: true,
-            message: 'Please input your Username!',
+            message: 'Please input your E-mail!',
           },
         ]}
       >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        <Input 
+          prefix={<MailOutlined className="site-form-item-icon" />} 
+          placeholder="E-Mail"
+        />
       </Form.Item>
       <Form.Item
         name="password"
@@ -56,9 +65,9 @@ const LoginCard = () => {
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
 
-        <a className="login-form__forgot" href="">
+        <Link className="login-form__forgot" to={"/"}>
           Forgot password
-        </a>
+        </Link>
       </Form.Item>
 
       <Form.Item>
@@ -70,6 +79,14 @@ const LoginCard = () => {
           Log in
         </Button>
         Or <Link to={"/register?redirect=shipping"}>register now!</Link>
+        {error==""?(
+          <></>
+        ):(
+        <div className="login-form__error-wrap">
+          <h3 className="login-form__error-title"><WarningOutlined className="site-form-item-icon" />{"  "}There was a problem</h3>
+          <p className="login-form__error-message">{error}</p>
+        </div>
+        )}
       </Form.Item>
     </Form>
   );

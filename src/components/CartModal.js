@@ -17,6 +17,7 @@ export default function CartModal({ isModalVisible, toggleModal }) {
    }
 
    const checkoutHandler = () => {
+      handleCancel();
       history.push("/login?redirect=shipping");
    }
 

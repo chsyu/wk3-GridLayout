@@ -582,19 +582,52 @@ span.ham-menu-bar3--touch {
 }
 
 /* Login/Register Form */
-.login-form {
+.login-form,
+.register-form {
   max-width: 20rem;
   background-color: #fff;
   padding: 1rem;
   margin-left: auto;
   margin-right: auto;
 }
+
+.register-form {
+  max-width: 25rem;
+}
+
 .login-form__forgot {
   float: right;
 }
+
 .ant-col-rtl .login-form__forgot {
   float: left;
 }
+
 .login-form__button {
   width: 100%;
+}
+
+.login-form__error-wrap {
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.7rem;
+  width: 80%;
+  border: solid 1px darkred;
+  border-radius: 4px;
+}
+
+.login-form__error-title {
+  color: darkred;
+}
+
+.login-form__error-message {
+  padding-top: 0;
+  margin-top: 0;
+  font-size: 0.5rem;
+}
+
+/* Profile */
+.profile-text {
+  color: black;
 }

@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
-import React from 'react';
+import { Link, useHistory } from "react-router-dom";
+import React, {useContext} from 'react';
 import { Form, Input, Checkbox, Button } from 'antd';
+import { WarningOutlined } from '@ant-design/icons';
+import { registerToFirebase } from '../actions'
+import { StoreContext } from "../store"
 
 const formItemLayout = {
   labelCol: {
@@ -34,10 +37,14 @@ const tailFormItemLayout = {
 };
 
 const RegisterCard = () => {
+   const { state:{ userRegister: { error } }, dispatch } = useContext(StoreContext);
    const [form] = Form.useForm();
+   const history = useHistory();
 
-   const onFinish = (values) => {
+   const onFinish = async (values) => {
      console.log('Received values of form: ', values);
+     await registerToFirebase(dispatch, values);
+     history.push("/profile");
    };
  
    return (
@@ -46,7 +53,7 @@ const RegisterCard = () => {
        form={form}
        name="register"
        onFinish={onFinish}
-       className="login-form"
+       className="register-form"
        scrollToFirstError
      >
        <Form.Item
@@ -130,7 +137,7 @@ const RegisterCard = () => {
          {...tailFormItemLayout}
        >
          <Checkbox>
-           I have read the <a href="">agreement</a>
+           I have read the <Link to={"/"}>agreement</Link>
          </Checkbox>
        </Form.Item>
        <Form.Item {...tailFormItemLayout}>
@@ -142,6 +149,14 @@ const RegisterCard = () => {
            Create your account
          </Button>
          Already have an account? <Link to={"/login?redirect=shipping"}>Login</Link>
+         {error==""?(
+          <></>
+        ):(
+        <div className="login-form__error-wrap">
+          <h3 className="login-form__error-title"><WarningOutlined className="site-form-item-icon" />{"  "}There was a problem</h3>
+          <p className="login-form__error-message">{error}</p>
+        </div>
+        )}
        </Form.Item>
      </Form>
    );
