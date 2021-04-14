@@ -3,6 +3,8 @@ import './App.css';
 import Home from './pages/Home'
 import Product from './pages/Product'
 import Feed from './pages/Feed'
+import Login from './pages/Login'
+import Register from './pages/Register'
 
 import { StoreProvider } from "./store";
 
@@ -12,9 +14,11 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/:pageName" component={Home} />
-          <Route exact path="/admin/feed-products" component={Feed} />
-          <Route exact path="/products/:category/:productId" component={Product} />
+          <Route exact path="/products/:pageName" component={Home} />
+          <Route path="/admin/feed-products" component={Feed} />
+          <Route path="/products/:category/:productId" component={Product} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
         </Switch>
       </BrowserRouter>
     </StoreProvider>

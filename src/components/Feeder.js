@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Row, Col, Card, Button } from "antd";
+import { Card, Button } from "antd";
 import { feedJSONToFirebase } from "../actions"
 import { StoreContext } from "../store";
 

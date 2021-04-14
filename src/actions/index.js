@@ -48,18 +48,25 @@ export const feedJSONToFirebase = async (dispatch) => {
   }
 }
 
-export const setProductDetail = async (dispatch, productId, qty, category) => {
-  await dispatch({ type: BEGIN_PRODUCTS_REQUEST });
+export const setProductDetail = async (dispatch, productId, qty) => {
+  dispatch({ type: BEGIN_PRODUCTS_REQUEST });
   try {
-    const product = await getProductById(productId, category);
-    if (qty === 0 && product.countInStock > 0) qty = 1;
-    dispatch({
-      type: SET_PRODUCT_DETAIL,
-      payload: {
-        product,
-        qty,
-      }
-    })
+    const product = await getProductById(productId);
+    if (qty === 0)
+      dispatch({
+        type: SET_PRODUCT_DETAIL,
+        payload: {
+          product,
+        }
+      })
+    else
+      dispatch({
+        type: SET_PRODUCT_DETAIL,
+        payload: {
+          product,
+          qty,
+        }
+      })    
     dispatch({ type: SUCCESS_PRODUCTS_REQUEST });
   } catch (error) {
     console.log(error);
@@ -69,8 +76,8 @@ export const setProductDetail = async (dispatch, productId, qty, category) => {
 
 export const setPage = async (dispatch, url, title) => {
   let products = [];
-  await dispatch({ type: BEGIN_PRODUCTS_REQUEST });
-  await dispatch({
+  dispatch({ type: BEGIN_PRODUCTS_REQUEST });
+  dispatch({
     type: SET_PAGE_TITLE,
     payload: title,
   });
@@ -78,7 +85,7 @@ export const setPage = async (dispatch, url, title) => {
     products = await getProducts(url);
     dispatch({
       type: SET_PAGE_CONTENT,
-      payload: products,
+      payload: { title, products },
     });
     dispatch({
       type: SET_NAVBAR_ACTIVEITEM,

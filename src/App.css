@@ -580,3 +580,21 @@ span.ham-menu-bar3--touch {
 .spinner {
   margin-top: 20vh;
 }
+
+/* Login/Register Form */
+.login-form {
+  max-width: 20rem;
+  background-color: #fff;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.login-form__forgot {
+  float: right;
+}
+.ant-col-rtl .login-form__forgot {
+  float: left;
+}
+.login-form__button {
+  width: 100%;
+}

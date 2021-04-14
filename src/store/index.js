@@ -39,7 +39,7 @@ const initialState = {
     error: null,
   },
   requestProducts: {
-    loading: true,
+    loading: false,
     error: null,
   }
 };
@@ -59,7 +59,7 @@ function reducer(state, action) {
         ...state,
         page: {
           ...state.page,
-          products: action.payload
+          ...action.payload
         },
       };
     case SET_NAVBAR_ACTIVEITEM:
@@ -84,7 +84,7 @@ function reducer(state, action) {
       cartItems = state.cartItems.filter((x) => x.id !== action.payload);
       return { ...state, cartItems };
     case SET_PRODUCT_DETAIL:
-      return { ...state, productDetail: action.payload };
+      return { ...state, productDetail: { ...state.productDetail, ...action.payload} };
     case BEGIN_PRODUCTS_REQUEST:
       return { ...state, requestProducts: { ...state.requestProducts, loading: true } }
     case SUCCESS_PRODUCTS_REQUEST:
@@ -108,6 +108,7 @@ export function StoreProvider(props) {
     initialState,
     "example"
   );
+  // const [state, dispatch] = useReducer(reducer, initialState)
   const value = { state, dispatch };
 
   return (

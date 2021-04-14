@@ -6,6 +6,7 @@ import { setPage } from "../actions"
 export default function NavItem(props) {
   const { children, to, className, activeClassName, onClose } = props;
   const { state, dispatch } = useContext(StoreContext);
+  const url = to === "/admin/feed-products" ? to : `/products${to}`;
 
   const onClick = () => {
     setPage(dispatch, to, children);
@@ -13,7 +14,7 @@ export default function NavItem(props) {
   };
 
   return (
-    <Link to={`${to}`}>
+    <Link to={url}>
       <div
         onClick={onClick}
         className={`

@@ -1,14 +1,14 @@
 import { Modal, Button, Select } from "antd";
 import { useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { StoreContext } from "../store"
 import { CartIcon } from "./Icons";
 import { addCartItem, removeCartItem, setProductDetail } from "../actions";
-import { authenticateAnonymously } from "../api"
 const { Option } = Select;
 
 export default function CartModal({ isModalVisible, toggleModal }) {
    const { state: { cartItems }, dispatch } = useContext(StoreContext);
+   const history = useHistory();
    const handleCancel = () => toggleModal(!isModalVisible);
    const getTotalPrice = () => {
       return (cartItems.length > 0) ?
@@ -16,10 +16,8 @@ export default function CartModal({ isModalVisible, toggleModal }) {
          : 0;
    }
 
-   const onAuth = () => {
-      const auth = authenticateAnonymously();
-      console.log(`auth =`);
-      console.log(auth)
+   const checkoutHandler = () => {
+      history.push("/login?redirect=shipping");
    }
 
    useEffect(() => {
@@ -40,7 +38,7 @@ export default function CartModal({ isModalVisible, toggleModal }) {
                <li key={item.id} className="cart-item">
                   <Link to={`/products/${item.category}/${item.id}`}>
                      <div className="cart-image" onClick={()=>{
-                        setProductDetail(dispatch, item.id, item.qty, item.category);
+                        setProductDetail(dispatch, item.id, item.qty);
                         handleCancel();
                      }}>
                         <img src={item.image} alt={item.name} />
@@ -83,7 +81,7 @@ export default function CartModal({ isModalVisible, toggleModal }) {
          <Button
             className="cart-modal-btn"
             type="primary"
-            onClick={onAuth}
+            onClick={checkoutHandler}
          >
             <CartIcon size={20} />
             <span style={{ marginLeft: 12 }}>Start Checkout</span>

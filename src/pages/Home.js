@@ -6,8 +6,9 @@ import AppHeader from "../components/Header"
 import AppFooter from "../components/Footer"
 import ProductList from "../components/ProductList";
 import { StoreContext } from "../store"
-import { setPage } from "../actions";
+
 import { getTitle } from "../utils";
+import { setPage } from "../actions";
 
 const { Header, Content, Footer } = Layout;
 
@@ -17,7 +18,7 @@ function Home() {
   useEffect(() => {
     const url = window.location.pathname;
     setPage(dispatch, url, getTitle(url))
-  }, []);// eslint-disable-line react-hooks/exhaustive-deps
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps  
   return (
     <Layout className="container main-layout">
       <Layout className="bg-gray nav-area">
