@@ -7,32 +7,32 @@
    {
       "title": "Cookware",
       "name": "Cookware",
-      "url": "/cookware"
+      "url": "/products/cookware"
    },
    {
       "title": "Furniture",
       "name": "Furniture",
-      "url": "/furniture"
+      "url": "/products/furniture"
    },
    {
       "title": "Home Acessories",
       "name": "Home Accessories",
-      "url": "/home-accessories"
+      "url": "/products/home-accessories"
    },
    {
       "title": "Lighting",
       "name": "Lighting",
-      "url": "/lighting"
+      "url": "/products/lighting"
    },
    {
       "title": "Tableware",
       "name": "Tableware",
-      "url": "/tableware"
+      "url": "/products/tableware"
    },
    {
       "title": "Textile",
       "name": "Textile",
-      "url": "/textile"
+      "url": "/products/textile"
    },
    {
       "title": "Feed JSON Page",

@@ -1,12 +1,11 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../store";
-import { setPage } from "../actions"
+import { setPage } from "../actions";
 
 export default function NavItem(props) {
   const { children, to, className, activeClassName, onClose } = props;
   const { state, dispatch } = useContext(StoreContext);
-  const url = to === "/admin/feed-products" ? to : `/products${to}`;
 
   const onClick = () => {
     setPage(dispatch, to, children);
@@ -14,7 +13,7 @@ export default function NavItem(props) {
   };
 
   return (
-    <Link to={url}>
+    <Link to={to}>
       <div
         onClick={onClick}
         className={`

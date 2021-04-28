@@ -18,9 +18,11 @@ export default function CartSummary() {
     <>
       <nav onClick={toggleModal} className="header-cart-summary" >
         <Badge count={count} size={"small"} style={{ color: 'white', backgroundColor: '#6366F2' }}>
-          <CartIcon size={32} />
-        </Badge>
-        <p className="cart-summary-text"> Shopping bag </p>
+          <CartIcon size={28} />
+        </Badge>          
+        <p className="cart-summary-text"> 
+          Bag
+        </p>
       </nav>
       <CartModal
         isModalVisible={isModalVisible}

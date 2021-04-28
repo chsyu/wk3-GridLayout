@@ -1,24 +1,23 @@
-import React, {useContext} from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Input, Button, Checkbox } from 'antd';
 import { WarningOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import { loginToFirebase } from '../actions'
 import { StoreContext } from "../store"
 
-const LoginCard = () => {
-  const { state:{ userSignin: { error } }, dispatch } = useContext(StoreContext);
+const LoginCard = ({ redirect }) => {
+  const { state:{ userSignin: { userInfo, loading, error } }, dispatch } = useContext(StoreContext);
   const [form] = Form.useForm();
   const history = useHistory();
-
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed: ', errorInfo.errorFields[0].errors[0])
-  };
-  
+ 
   const onFinish = async (values) => {
     console.log('Received values of form: ', values);
     await loginToFirebase(dispatch, values);
-    history.push("/profile");
   };
+
+  useEffect(() => {
+    if(userInfo) history.push(redirect);
+  }, [ userInfo ]);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Form
@@ -29,19 +28,23 @@ const LoginCard = () => {
         remember: true,
       }}
       onFinish={onFinish}
-      onFihishFailed={onFinishFailed}
     >
       <Form.Item
         name="email"
         rules={[
           {
+            type: "email",
+            message: "The input is not valid E-mail!",
+          },
+          {
             required: true,
-            message: 'Please input your E-mail!',
+            message: "Please input your E-mail!",
           },
         ]}
+        hasFeedback
       >
-        <Input 
-          prefix={<MailOutlined className="site-form-item-icon" />} 
+        <Input
+          prefix={<MailOutlined className="site-form-item-icon" />}
           placeholder="E-Mail"
         />
       </Form.Item>
@@ -50,11 +53,12 @@ const LoginCard = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your Password!',
+            message: "Please input your Password!",
           },
         ]}
+        hasFeedback
       >
-        <Input
+        <Input.Password
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
           placeholder="Password"
@@ -71,21 +75,35 @@ const LoginCard = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button 
-          type="primary" 
-          htmlType="submit"
-          className="login-form__button"
-        >
-          Log in
-        </Button>
+        {loading ? (
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form__button"
+            loading
+          >
+            Log in
+          </Button>
+        ) : (
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form__button"
+          >
+            Log in
+          </Button>
+        )}
         Or <Link to={"/register?redirect=shipping"}>register now!</Link>
-        {error==""?(
+        {error === "" ? (
           <></>
-        ):(
-        <div className="login-form__error-wrap">
-          <h3 className="login-form__error-title"><WarningOutlined className="site-form-item-icon" />{"  "}There was a problem</h3>
-          <p className="login-form__error-message">{error}</p>
-        </div>
+        ) : (
+          <div className="login-form__error-wrap">
+            <h3 className="login-form__error-title">
+              <WarningOutlined className="site-form-item-icon" />
+              {"  "}There was a problem
+            </h3>
+            <p className="login-form__error-message">{error}</p>
+          </div>
         )}
       </Form.Item>
     </Form>

@@ -5,7 +5,7 @@ import ProfileCard from "../components/ProfileCard";
 
 const { Header, Content, Footer } = Layout;
 
-function Register() {
+function Profile() {
   return (
     <Layout className="container main-layout">
       <Layout className="bg-gray main-area">
@@ -23,4 +23,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Profile;

@@ -121,12 +121,14 @@ export const loginToFirebase = async (dispatch, userInfo) => {
       type: SUCCESS_LOGIN_REQUEST,
       payload: user.user.providerData[0],
     })
+    return user;
   } catch (e) {
     dispatch({
       type: FAIL_LOGIN_REQUEST,
       payload: e.message
     })
     console.log(e)
+    return null;
   }
 }
 
@@ -140,12 +142,14 @@ export const registerToFirebase = async (dispatch, userInfo) => {
       type: SUCCESS_REGISTER_REQUEST,
       payload: user.providerData[0],
     })
+    return user;
   } catch (e) {
     dispatch({
       type: FAIL_REGISTER_REQUEST,
       payload: e.message
     })
     console.log(e)
+    return null;
   }
 }
 
