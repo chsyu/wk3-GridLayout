@@ -2,11 +2,11 @@ import React, { useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Input, Button, Checkbox } from 'antd';
 import { WarningOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
-import { loginToFirebase } from '../actions'
+import { checkLogin, loginToFirebase, rememberLoginUser } from '../actions'
 import { StoreContext } from "../store"
 
 const LoginCard = ({ redirect }) => {
-  const { state:{ userSignin: { userInfo, loading, error } }, dispatch } = useContext(StoreContext);
+  const { state:{ userSignin: { userInfo, loading, error, remember } }, dispatch } = useContext(StoreContext);
   const [form] = Form.useForm();
   const history = useHistory();
  
@@ -15,8 +15,12 @@ const LoginCard = ({ redirect }) => {
     await loginToFirebase(dispatch, values);
   };
 
-  useEffect(() => {
-    if(userInfo) history.push(redirect);
+  const onChange = e => {
+    rememberLoginUser(dispatch, e.target.checked);
+  }
+
+  useEffect(() => {    
+    if( userInfo && checkLogin(dispatch) ) history.push(redirect);
   }, [ userInfo ]);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -65,8 +69,11 @@ const LoginCard = ({ redirect }) => {
         />
       </Form.Item>
       <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
+        <Form.Item
+          name="remember"
+          noStyle
+        >
+          <Checkbox onChange={onChange} checked={remember}>Remember me</Checkbox>
         </Form.Item>
 
         <Link className="login-form__forgot" to={"/"}>

@@ -1,18 +1,18 @@
 import { Layout } from "antd";
 import ShippingHeader from "../components/ShippingHeader";
+import PlaceOrderCard from "../components/PlaceOrderCard";
 import AppFooter from "../components/Footer";
-import ShippingAddressCard from "../components/ShippingAddressCard";
 const { Header, Content, Footer } = Layout;
 
-function Shipping() {
+function PlaceOrder() {
   return (
     <Layout className="container main-layout">
       <Layout className="bg-gray main-area">
         <Header className="layout-header">
-          <ShippingHeader title="Shipping Page" step1 step2 />
+          <ShippingHeader title="Place Order Page" step1 step2 step3 step4 />
         </Header>
         <Content className="layout-content">
-          <ShippingAddressCard />
+           <PlaceOrderCard />
         </Content>
         <Footer className="layout-footer">
           <AppFooter />
@@ -22,4 +22,4 @@ function Shipping() {
   );
 }
 
-export default Shipping;
+export default PlaceOrder;

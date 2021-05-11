@@ -58,6 +58,29 @@ body {
   padding: 0 15px;
 }
 
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.primary-google-btn {
+  margin-top: 1rem;
+}
+
+.primary-btn {
+  margin-top: 1rem;
+  border-color: #6366F2;
+  background-color: #6366F2;
+}
+
+.primary-btn:hover {
+  border-color: #8183ff;
+  background-color: #8183ff;
+}
+
+
 .layout-header,
 .layout-footer {
   padding: 0;
@@ -457,6 +480,13 @@ span.ham-menu-bar3--touch {
   border: solid gray 1px;
 }
 
+@media (max-width: 575px) {
+
+  .product {
+    margin-right: -16px;
+  }
+}
+
 .ant-card-body {
   padding: 0;
 }
@@ -601,18 +631,31 @@ span.ham-menu-bar3--touch {
   margin-top: 20vh;
 }
 
-/* Login/Register Form */
+/* Login/Register/Shipping Form */
+.placeorder-card,
+.shipping-form,
 .login-form,
 .register-form {
-  max-width: 20rem;
   background-color: #fff;
   padding: 1rem;
   margin-left: auto;
   margin-right: auto;
 }
 
+.login-form {
+  max-width: 20rem;
+}
+
 .register-form {
   max-width: 30rem;
+}
+
+.shipping-form {
+  max-width: 40rem;
+}
+
+.placeorder-card {
+  max-width: 100vw;
 }
 
 .login-form__forgot {
@@ -650,4 +693,33 @@ span.ham-menu-bar3--touch {
 /* Profile */
 .profile-text {
   color: black;
+}
+
+/* Checkout Steps */
+.checkout-steps {
+  font-size: 0.6rem;
+  width: 80%;
+  margin-bottom: 2rem;
+}
+.checkout-steps > div {
+  border-top: 0.3rem #c0c0c0 solid;
+  color: #c0c0c0;
+  flex: 1;
+  padding: 0.2rem;
+  font-weight: bold;
+}
+.checkout-steps > div.active {
+  border-top-color: #6366F2;
+  color: #6366F2;
+}
+
+/* PlaceOrder / Order Card */
+.card {
+  border: 0.1rem #c0c0c0 solid;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+}
+
+.card-body {
+  padding: 1rem;
 }
